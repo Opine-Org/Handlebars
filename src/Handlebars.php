@@ -88,5 +88,6 @@ class Handlebars {
             $this->compileFolder($this->root . '/../bundles/' . $bundle . '/public/layouts', 'html');
             $this->compileFolder($this->root . '/../bundles/' . $bundle . '/public/partials', 'hbs');
         }
+        return true;
     }
 }

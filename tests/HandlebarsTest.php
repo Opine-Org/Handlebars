@@ -19,7 +19,7 @@ class HandlebarsTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testSample () {
-        $this->handlebars->build();
+        $this->assertTrue($this->handlebars->build());
     }
 
     public function testCachedApp () {
