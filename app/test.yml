@@ -1,0 +1,4 @@
+binding:
+    test:
+        partial: 'partial.hbs'
+        type: 'Array'

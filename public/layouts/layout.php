@@ -48,7 +48,7 @@
     );
     return '<html>
 <head>
-	<title></title>
+    <title></title>
 </head>
 <body>
 <div>'.$cx['funcs']['raw']($cx, ((is_array($in) && isset($in['test'])) ? $in['test'] : null)).'</div>
