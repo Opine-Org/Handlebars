@@ -25,68 +25,68 @@
 namespace Opine;
 
 class Handlebars {
-	private $root;
-	private $engine;
-	private $bundleRoute;
-	private $quiet = false;
+    private $root;
+    private $engine;
+    private $bundleRoute;
+    private $quiet = false;
 
-	public function __construct ($root, $engine, $bundleRoute) {
-		$this->root = $root;
-		$this->engine = $engine;
-		$this->bundleRoute = $bundleRoute;
-	}
+    public function __construct ($root, $engine, $bundleRoute) {
+        $this->root = $root;
+        $this->engine = $engine;
+        $this->bundleRoute = $bundleRoute;
+    }
 
-	public function quiet () {
-		$this->quiet = true;
-	}
+    public function quiet () {
+        $this->quiet = true;
+    }
 
-	private function compileFile ($input) {
-		$output = rtrim(rtrim($input, 'html'), 'hbs') . 'php';
+    private function compileFile ($input) {
+        $output = rtrim(rtrim($input, 'html'), 'hbs') . 'php';
         $helpers = @include $this->root . '/../public/helpers/_build.php';
         $hbhelpers = @include $this->root . '/../public/hbhelpers/_build.php';
         $blockhelpers = @include $this->root . '/../public/blockhelpers/_build.php';
         try {
-	        $php = $this->engine->compile(
-	            file_get_contents($input), 
-	            [
-	                'flags' => \LightnCandy::FLAG_STANDALONE | \LightnCandy::FLAG_HANDLEBARSJS,
-	                'helpers' => ($helpers != false ? $helpers : []),
-	                'hbhelpers' => ($hbhelpers != false ? $hbhelpers : []),
-	                'blockhelpers' => ($blockhelpers != false ? $blockhelpers : [])
-	            ]
-	        );
-	        file_put_contents($output, $php);
-	        return true;
-	    } catch (\Exception $e) {
-	    	return $e->getMessage();
-	    }
+            $php = $this->engine->compile(
+                file_get_contents($input), 
+                [
+                    'flags' => \LightnCandy::FLAG_STANDALONE | \LightnCandy::FLAG_HANDLEBARSJS,
+                    'helpers' => ($helpers != false ? $helpers : []),
+                    'hbhelpers' => ($hbhelpers != false ? $hbhelpers : []),
+                    'blockhelpers' => ($blockhelpers != false ? $blockhelpers : [])
+                ]
+            );
+            file_put_contents($output, $php);
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     private function compileFolder ($folder, $type) {
-    	if (!file_exists($folder)) {
-    		return;
-    	}
-    	$files = glob($folder . '/*.' . $type);
-    	foreach ($files as $file) {
-    		$result = $this->compileFile($file);
-    		if ($this->quiet === true) {
-    			continue;
-    		}
-    		if ($result === true) {
-    			echo 'COMPILED: ', $file, "\n";
-    		} else {
-    			echo 'ERROR: ', $file, ': ', $result, "\n";
-    		}
-    	}
+        if (!file_exists($folder)) {
+            return;
+        }
+        $files = glob($folder . '/*.' . $type);
+        foreach ($files as $file) {
+            $result = $this->compileFile($file);
+            if ($this->quiet === true) {
+                continue;
+            }
+            if ($result === true) {
+                echo 'COMPILED: ', $file, "\n";
+            } else {
+                echo 'ERROR: ', $file, ': ', $result, "\n";
+            }
+        }
     }
 
-	public function build () {
-		$this->compileFolder($this->root . '/../public/layouts', 'html');
-		$this->compileFolder($this->root . '/../public/partials', 'hbs');
-		$bundles = $this->bundleRoute->bundles();
-		foreach ($bundles as $bundle) {
-			$this->compileFolder($this->root . '/../bundles/' . $bundle . '/public/layouts', 'html');
-			$this->compileFolder($this->root . '/../bundles/' . $bundle . '/public/partials', 'hbs');
-		}
-	}
+    public function build () {
+        $this->compileFolder($this->root . '/../public/layouts', 'html');
+        $this->compileFolder($this->root . '/../public/partials', 'hbs');
+        $bundles = $this->bundleRoute->bundles();
+        foreach ($bundles as $bundle) {
+            $this->compileFolder($this->root . '/../bundles/' . $bundle . '/public/layouts', 'html');
+            $this->compileFolder($this->root . '/../bundles/' . $bundle . '/public/partials', 'hbs');
+        }
+    }
 }
