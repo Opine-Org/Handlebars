@@ -1,0 +1,27 @@
+{
+    "name": "opine/handlebars",
+    "type": "library",
+    "minimum-stability": "dev",
+    "description": "Wrapper to Zordius LightnCandy Handlebars PHP compiler for compiling all layouts and partials in opine projects",
+    "keywords": ["handlebars"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ryan Mahoney",
+            "email": "ryan@virtuecenter.com",
+            "homepage": "http://opine-php.org",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "phpunit/phpunit": "3.7.32",
+        "opine/db": "dev-master",
+        "opine/container": "dev-master",
+        "zordius/lightncandy": "dev-master",
+        "opine/bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {"Opine\\": "src/"}
+    }
+}
