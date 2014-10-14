@@ -69,6 +69,9 @@ class Handlebars {
                 ]
             );
             file_put_contents($output, $php);
+            if (filesize($output) == 0) {
+                echo 'Bad Compile: ', $output, "\n";
+            }
             return true;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -78,10 +81,11 @@ class Handlebars {
     private function rsearch($folder, $extension) {
         $dir = new RecursiveDirectoryIterator($folder);
         $ite = new RecursiveIteratorIterator($dir);
-        $files = new RegexIterator($ite, '/\.' . $extension . '$/', RegexIterator::GET_MATCH);
+        $files = new RegexIterator($ite, '/' . $extension . '$/');
+        $files->setMode(RegexIterator::MATCH);
         $fileList = [];
         foreach ($files as $file) {
-            $fileList = array_merge($fileList, $file);
+            $fileList[] = $file->getPathname();
         }
         return $fileList;
     }
@@ -105,8 +109,11 @@ class Handlebars {
     }
 
     public function build () {
-        print_r ($this->rsearch($this->root . '/../public/layouts', 'html'));
-        exit;
-        $this->rsearch($this->root . '/../public/partials', 'hbs');
+        foreach ($this->rsearch($this->root . '/../public/layouts', 'html') as $file) {
+            $this->compileFile($file);
+        }
+        foreach ($this->rsearch($this->root . '/../public/partials', 'hbs') as $file) {
+            $this->compileFile($file);
+        }
     }
 }
