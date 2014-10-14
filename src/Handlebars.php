@@ -71,6 +71,11 @@ class Handlebars {
             file_put_contents($output, $php);
             if (filesize($output) == 0) {
                 echo 'Bad Compile: ', $output, "\n";
+            } else {
+                $result = shell_exec(PHP_BINARY . ' -l ' . escapeshellarg($output));
+                if (substr_count($result, 'No syntax errors detected') <  1) {
+                    echo 'Syntax Errors: ', $output, "\n";
+                }
             }
             return true;
         } catch (\Exception $e) {
