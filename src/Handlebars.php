@@ -23,17 +23,33 @@
  * THE SOFTWARE.
  */
 namespace Opine;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RegexIterator;
 
 class Handlebars {
     private $root;
     private $engine;
-    private $bundleRoute;
     private $quiet = false;
+    private $helpers = [];
+    private $hbhelpers = [];
+    private $blockhelpers = [];
 
-    public function __construct ($root, $engine, $bundleRoute) {
+    public function __construct ($root, $engine) {
         $this->root = $root;
         $this->engine = $engine;
-        $this->bundleRoute = $bundleRoute;
+        $helpersFile = $root . '/../cache/helpers.php';
+        if (file_exists($helpersFile)) {
+            $this->helpers = require $helpersFile;
+        }
+        $helpersFile = $root . '/../cache/hbhelpers.php';
+        if (file_exists($helpersFile)) {
+            $this->hbhelpers = require $helpersFile;
+        }
+        $helpersFile = $root . '/../cache/blockhelpers.php';
+        if (file_exists($helpersFile)) {
+            $this->blockhelpers = require $helpersFile;
+        }
     }
 
     public function quiet () {
@@ -42,17 +58,14 @@ class Handlebars {
 
     private function compileFile ($input) {
         $output = rtrim(rtrim($input, 'html'), 'hbs') . 'php';
-        $helpers = @include $this->root . '/../public/helpers/_build.php';
-        $hbhelpers = @include $this->root . '/../public/hbhelpers/_build.php';
-        $blockhelpers = @include $this->root . '/../public/blockhelpers/_build.php';
         try {
             $php = $this->engine->compile(
                 file_get_contents($input), 
                 [
                     'flags' => \LightnCandy::FLAG_STANDALONE | \LightnCandy::FLAG_HANDLEBARSJS,
-                    'helpers' => ($helpers != false ? $helpers : []),
-                    'hbhelpers' => ($hbhelpers != false ? $hbhelpers : []),
-                    'blockhelpers' => ($blockhelpers != false ? $blockhelpers : [])
+                    'helpers' => $this->helpers,
+                    'hbhelpers' => $this->hbhelpers,
+                    'blockhelpers' => $this->blockhelpers
                 ]
             );
             file_put_contents($output, $php);
@@ -60,6 +73,17 @@ class Handlebars {
         } catch (\Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    private function rsearch($folder, $extension) {
+        $dir = new RecursiveDirectoryIterator($folder);
+        $ite = new RecursiveIteratorIterator($dir);
+        $files = new RegexIterator($ite, '/\.' . $extension . '$/', RegexIterator::GET_MATCH);
+        $fileList = [];
+        foreach ($files as $file) {
+            $fileList = array_merge($fileList, $file);
+        }
+        return $fileList;
     }
 
     private function compileFolder ($folder, $type) {
@@ -81,13 +105,8 @@ class Handlebars {
     }
 
     public function build () {
-        $this->compileFolder($this->root . '/../public/layouts', 'html');
-        $this->compileFolder($this->root . '/../public/partials', 'hbs');
-        $bundles = $this->bundleRoute->bundles();
-        foreach ($bundles as $bundle) {
-            $this->compileFolder($this->root . '/../bundles/' . $bundle . '/public/layouts', 'html');
-            $this->compileFolder($this->root . '/../bundles/' . $bundle . '/public/partials', 'hbs');
-        }
-        return true;
+        print_r ($this->rsearch($this->root . '/../public/layouts', 'html'));
+        exit;
+        $this->rsearch($this->root . '/../public/partials', 'hbs');
     }
 }

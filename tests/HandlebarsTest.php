@@ -1,7 +1,8 @@
 <?php
 namespace Opine;
+use PHPUnit_Framework_TestCase;
 
-class HandlebarsTest extends \PHPUnit_Framework_TestCase {
+class HandlebarsTest extends PHPUnit_Framework_TestCase {
     private $handlebars;
     private $separation;
 

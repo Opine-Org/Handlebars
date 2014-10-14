@@ -15,12 +15,12 @@ services:
     bundleRoute:
         class:     'Opine\BundleRoute'
         arguments: ['%root%', '@container']
-    engine:
+    handlebarCache:
         class:     '\LightnCandy'
         arguments: []
     handlebarService:
         class:     'Opine\Handlebars'
-        arguments: ['%root%', '@engine', '@bundleRoute']
+        arguments: ['%root%', '@handlebarCache', '@bundleRoute']
     handlebars:
         class:     'Handlebars\Handlebars'
         arguments: []

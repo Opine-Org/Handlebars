@@ -15,12 +15,13 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "phpunit/phpunit": "3.7.32",
-        "opine/db": "dev-master",
-        "opine/container": "dev-master",
-        "zordius/lightncandy": "dev-master",
-        "opine/bundle": "dev-master",
-        "opine/separation": "dev-master"
+        "phpunit\/phpunit": "3.7.32",
+        "opine\/db": "dev-master",
+        "opine\/container": "dev-master",
+        "zordius\/lightncandy": "dev-master",
+        "opine\/bundle": "dev-master",
+        "opine\/separation": "dev-master",
+        "opine\/helper": "dev-master"
     },
     "autoload": {
         "psr-4": {"Opine\\": "src/"}
