@@ -1,4 +1,4 @@
-binding:
+regions:
     test:
         partial: 'partial.hbs'
         type: 'Array'

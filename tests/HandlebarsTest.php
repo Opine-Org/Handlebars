@@ -4,7 +4,7 @@ use PHPUnit_Framework_TestCase;
 
 class HandlebarsTest extends PHPUnit_Framework_TestCase {
     private $handlebars;
-    private $separation;
+    private $layout;
 
     public function setup () {
         date_default_timezone_set('UTC');
@@ -12,7 +12,7 @@ class HandlebarsTest extends PHPUnit_Framework_TestCase {
         $container = new Container($root, $root . '/../container.yml');
         $this->handlebars = $container->handlebarService;
         $this->handlebars->quiet();
-        $this->separation = $container->separation;
+        $this->layout = $container->separation;
     }
 
     private function normalizeResponse ($input) {
@@ -25,7 +25,7 @@ class HandlebarsTest extends PHPUnit_Framework_TestCase {
 
     public function testCachedApp () {
         ob_start();
-        $this->separation->
+        $this->layout->
             app('app/test')->
             layout('layout')->
             data('test', ['test' => 'ABC'])->

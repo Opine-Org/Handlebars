@@ -26,6 +26,8 @@ namespace Opine;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RegexIterator;
+use Exception;
+use LightnCandy;
 
 class Handlebars {
     private $root;
@@ -62,7 +64,7 @@ class Handlebars {
             $php = $this->engine->compile(
                 file_get_contents($input), 
                 [
-                    'flags' => \LightnCandy::FLAG_STANDALONE | \LightnCandy::FLAG_HANDLEBARSJS,
+                    'flags' => LightnCandy::FLAG_STANDALONE | LightnCandy::FLAG_HANDLEBARSJS | LightnCandy::FLAG_ERROR_EXCEPTION,
                     'helpers' => $this->helpers,
                     'hbhelpers' => $this->hbhelpers,
                     'blockhelpers' => $this->blockhelpers
@@ -72,13 +74,14 @@ class Handlebars {
             if (filesize($output) == 0) {
                 echo 'Bad Compile: ', $output, "\n";
             } else {
-                $result = shell_exec(PHP_BINARY . ' -l ' . escapeshellarg($output));
-                if (substr_count($result, 'No syntax errors detected') <  1) {
-                    echo 'Syntax Errors: ', $output, "\n";
-                }
+//                $result = shell_exec(PHP_BINARY . ' -l ' . escapeshellarg($output));
+//                if (substr_count($result, 'No syntax errors detected') <  1) {
+//                   echo 'Syntax Errors: ', $output, "\n";
+//                }
             }
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            echo $input, ': ', $e->getMessage(), "\n";
             return $e->getMessage();
         }
     }
@@ -101,7 +104,9 @@ class Handlebars {
         }
         $files = glob($folder . '/*.' . $type);
         foreach ($files as $file) {
+            echo $file, "\n";
             $result = $this->compileFile($file);
+            var_dump($result);
             if ($this->quiet === true) {
                 continue;
             }

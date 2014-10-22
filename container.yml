@@ -24,8 +24,8 @@ services:
     handlebars:
         class:     'Handlebars\Handlebars'
         arguments: []
-    separation:
-        class:     'Opine\Separation'
+    layout:
+        class:     'Opine\Layout'
         arguments: ['%root%', '@handlebars', '@cache', '@config', '@yamlSlow', '@route']
     route:
         class:     'Opine\Route'

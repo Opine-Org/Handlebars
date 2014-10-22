@@ -20,7 +20,7 @@
         "opine\/container": "dev-master",
         "zordius\/lightncandy": "dev-master",
         "opine\/bundle": "dev-master",
-        "opine\/separation": "dev-master",
+        "opine\/layout": "dev-master",
         "opine\/helper": "dev-master"
     },
     "autoload": {
