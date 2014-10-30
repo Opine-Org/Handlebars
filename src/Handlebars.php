@@ -59,7 +59,7 @@ class Handlebars {
     }
 
     private function compileFile ($input) {
-        $output = rtrim(rtrim($input, 'html'), 'hbs') . 'php';
+        $output = str_replace('/public/', '/cache/', $input);
         try {
             $php = $this->engine->compile(
                 file_get_contents($input), 
@@ -70,6 +70,10 @@ class Handlebars {
                     'blockhelpers' => $this->blockhelpers
                 ]
             );
+            $pathParts = pathinfo($output);
+            if (!file_exists($pathParts['dirname'])) {
+                mkdir($pathParts['dirname'], 0777, true);
+            }
             file_put_contents($output, $php);
             if (filesize($output) == 0) {
                 echo 'Bad Compile: ', $output, "\n";
