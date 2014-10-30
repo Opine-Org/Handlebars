@@ -40,6 +40,10 @@ class Handlebars {
     public function __construct ($root, $engine) {
         $this->root = $root;
         $this->engine = $engine;
+        $this->helpersLoad();
+    }
+
+    public function helpersLoad () {
         $helpersFile = $root . '/../cache/helpers.php';
         if (file_exists($helpersFile)) {
             $this->helpers = require $helpersFile;
