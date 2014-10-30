@@ -1,39 +1,25 @@
+imports:
+    - 'package-container.yml'
+    - 'vendor/opine/collection/package-container.yml'
+    - 'vendor/opine/route/package-container.yml'
+    - 'vendor/opine/form/package-container.yml'
+    - 'vendor/opine/language/package-container.yml'
+    - 'vendor/opine/build/package-container.yml'
+    - 'vendor/opine/config/package-container.yml'
+    - 'vendor/opine/helper/package-container.yml'
+    - 'vendor/opine/bundle/package-container.yml'
+    - 'vendor/opine/field/package-container.yml'
+    - 'vendor/opine/container/package-container.yml'
+    - 'vendor/opine/layout/package-container.yml'
+    - 'vendor/opine/db/package-container.yml'
+    - 'vendor/opine/http/package-container.yml'
+    - 'vendor/opine/person/package-container.yml'
+    - 'vendor/opine/queue/package-container.yml'
+    - 'vendor/opine/search/package-container.yml'
+    - 'vendor/opine/mail/package-container.yml'
+    - 'vendor/opine/uploadwrapper/package-container.yml'
+    - 'vendor/opine/imageresizer/package-container.yml'
+
 services:
-    cache:
-        class:     'Opine\Cache'
-    topic:
-        class:     'Opine\Topic'
-        arguments: ['@container']
-    config:
-        class:     'Opine\Config'
-        arguments: ['%root%', '@cache']
-    db:
-        class:     'Opine\Mongo'
-        arguments: ['@config', '@topic']
     yamlSlow:
        class:     'Symfony\Component\Yaml\Yaml'
-    bundleRoute:
-        class:     'Opine\BundleRoute'
-        arguments: ['%root%', '@container']
-    handlebarCache:
-        class:     '\LightnCandy'
-        arguments: []
-    handlebarService:
-        class:     'Opine\Handlebars'
-        arguments: ['%root%', '@handlebarCache', '@bundleRoute']
-    handlebars:
-        class:     'Handlebars\Handlebars'
-        arguments: []
-    layout:
-        class:     'Opine\Layout'
-        arguments: ['%root%', '@handlebars', '@cache', '@config', '@yamlSlow', '@route']
-    route:
-        class:     'Opine\Route'
-        arguments: ['@fastrouteCollector']
-    fastrouteCollector:
-        class:     'FastRoute\RouteCollector'
-        arguments: ['@fastrouteParser', '@fastrouteGenerator']
-    fastrouteParser:
-        class:     'FastRoute\RouteParser\Std'
-    fastrouteGenerator:
-        class:     'FastRoute\DataGenerator\GroupCountBased'
