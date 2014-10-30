@@ -44,15 +44,15 @@ class Handlebars {
     }
 
     public function helpersLoad () {
-        $helpersFile = $root . '/../cache/helpers.php';
+        $helpersFile = $this->root . '/../cache/helpers.php';
         if (file_exists($helpersFile)) {
             $this->helpers = require $helpersFile;
         }
-        $helpersFile = $root . '/../cache/hbhelpers.php';
+        $helpersFile = $this->root . '/../cache/hbhelpers.php';
         if (file_exists($helpersFile)) {
             $this->hbhelpers = require $helpersFile;
         }
-        $helpersFile = $root . '/../cache/blockhelpers.php';
+        $helpersFile = $this->root . '/../cache/blockhelpers.php';
         if (file_exists($helpersFile)) {
             $this->blockhelpers = require $helpersFile;
         }
