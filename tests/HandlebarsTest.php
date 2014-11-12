@@ -29,7 +29,6 @@ class HandlebarsTest extends PHPUnit_Framework_TestCase {
             app('app/test')->
             layout('layout')->
             data('test', ['test' => 'ABC'])->
-            template()->
             write();
         $response = ob_get_clean();
         $this->assertTrue($this->normalizeResponse($response) == '<html><head><title></title></head><body><div><div>ABC</div></div></body></html>');
