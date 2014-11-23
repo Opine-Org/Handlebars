@@ -24,6 +24,6 @@
         "opine\/helper": "dev-master"
     },
     "autoload": {
-        "psr-4": {"Opine\\": "src/"}
+        "psr-4": {"Opine\\Handlebars\\": "src/"}
     }
 }

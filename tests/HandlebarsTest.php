@@ -1,18 +1,22 @@
 <?php
 namespace Opine;
+
 use PHPUnit_Framework_TestCase;
+use Opine\Config\Service as Config;
+use Opine\Container\Service as Container;
 
 class HandlebarsTest extends PHPUnit_Framework_TestCase {
     private $handlebars;
     private $layout;
 
     public function setup () {
-        date_default_timezone_set('UTC');
         $root = __DIR__ . '/../public';
-        $container = new Container($root, $root . '/../container.yml');
-        $this->handlebars = $container->handlebarService;
+        $config = new Config($root);
+        $config->cacheSet();
+        $container = new Container($root, $config, $root . '/../container.yml');
+        $this->handlebars = $container->get('handlebarService');
         $this->handlebars->quiet();
-        $this->layout = $container->separation;
+        $this->layout = $container->get('layout');
     }
 
     private function normalizeResponse ($input) {
