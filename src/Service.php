@@ -66,7 +66,7 @@ class Service {
         $output = str_replace('/public/', '/cache/', $input);
         try {
             $php = $this->engine->compile(
-                file_get_contents($input), 
+                file_get_contents($input),
                 [
                     'flags' => LightnCandy::FLAG_STANDALONE | LightnCandy::FLAG_HANDLEBARSJS | LightnCandy::FLAG_ERROR_EXCEPTION,
                     'helpers' => $this->helpers,
