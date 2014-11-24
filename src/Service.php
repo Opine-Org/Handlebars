@@ -23,6 +23,7 @@
  * THE SOFTWARE.
  */
 namespace Opine\Handlebars;
+
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RegexIterator;
