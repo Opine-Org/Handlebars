@@ -30,10 +30,10 @@ use Exception;
 class HelperToService {
     public static function __callStatic ($name, Array $parameters=[]) {
         $container = Container::instance();
-        $service = $container->get(lcfirst($name));
+        $service = $container->get('helper' . $name);
         if (!is_object($service)) {
-            throw new Exception('Helper service not in container: ' . $name);
+            throw new Exception('Helper service not in container: helper' . $name);
         }
-        return call_user_func_array([$service, 'helper'], $parameters);
+        return call_user_func_array([$service, 'render'], $parameters);
     }
 }
