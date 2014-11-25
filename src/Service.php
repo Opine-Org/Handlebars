@@ -64,7 +64,7 @@ class Service {
     }
 
     private function compileFile ($input) {
-        $output = str_replace('/public/../public/', '/var/cache/', $input);
+        $output = str_replace('/public/../public/', '/var/cache/public/', $input);
         try {
             $php = $this->engine->compile(
                 file_get_contents($input),
