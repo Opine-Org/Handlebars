@@ -64,7 +64,7 @@ class Service {
     }
 
     private function compileFile ($input) {
-        $output = str_replace('/public/', '/var/cache/', $input);
+        $output = str_replace('/public/../public/', '/var/cache/', $input);
         try {
             $php = $this->engine->compile(
                 file_get_contents($input),
@@ -100,26 +100,6 @@ class Service {
             $fileList[] = $file->getPathname();
         }
         return $fileList;
-    }
-
-    private function compileFolder ($folder, $type) {
-        if (!file_exists($folder)) {
-            return;
-        }
-        $files = glob($folder . '/*.' . $type);
-        foreach ($files as $file) {
-            echo $file, "\n";
-            $result = $this->compileFile($file);
-            var_dump($result);
-            if ($this->quiet === true) {
-                continue;
-            }
-            if ($result === true) {
-                echo 'COMPILED: ', $file, "\n";
-            } else {
-                echo 'ERROR: ', $file, ': ', $result, "\n";
-            }
-        }
     }
 
     public function build () {
