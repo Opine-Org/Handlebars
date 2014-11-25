@@ -13,7 +13,7 @@ class HandlebarsTest extends PHPUnit_Framework_TestCase {
         $root = __DIR__ . '/../public';
         $config = new Config($root);
         $config->cacheSet();
-        $container = Container::instance($root, $config, $root . '/../container.yml');
+        $container = Container::instance($root, $config, $root . '/../config/container.yml');
         $this->handlebars = $container->get('handlebarService');
         $this->handlebars->quiet();
         $this->layout = $container->get('layout');

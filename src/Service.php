@@ -45,15 +45,15 @@ class Service {
     }
 
     public function helpersLoad () {
-        $helpersFile = $this->root . '/../cache/helpers.php';
+        $helpersFile = $this->root . '/../var/cache/helpers.php';
         if (file_exists($helpersFile)) {
             $this->helpers = require $helpersFile;
         }
-        $helpersFile = $this->root . '/../cache/hbhelpers.php';
+        $helpersFile = $this->root . '/../var/cache/hbhelpers.php';
         if (file_exists($helpersFile)) {
             $this->hbhelpers = require $helpersFile;
         }
-        $helpersFile = $this->root . '/../cache/blockhelpers.php';
+        $helpersFile = $this->root . '/../var/cache/blockhelpers.php';
         if (file_exists($helpersFile)) {
             $this->blockhelpers = require $helpersFile;
         }
@@ -64,7 +64,7 @@ class Service {
     }
 
     private function compileFile ($input) {
-        $output = str_replace('/public/', '/cache/', $input);
+        $output = str_replace('/public/', '/var/cache/', $input);
         try {
             $php = $this->engine->compile(
                 file_get_contents($input),
