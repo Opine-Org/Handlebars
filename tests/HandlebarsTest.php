@@ -28,11 +28,11 @@ class HandlebarsTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testCachedApp () {
+        $context = ['test' => ['test' => 'ABC']];
         ob_start();
         $this->layout->
-            app('app/test')->
-            layout('layout')->
-            data('test', ['test' => 'ABC'])->
+            config('test', $context)->
+            container('layout')->
             write();
         $response = ob_get_clean();
         $this->assertTrue($this->normalizeResponse($response) == '<html><head><title></title></head><body><div><div>ABC</div></div></body></html>');
