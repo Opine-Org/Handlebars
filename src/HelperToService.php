@@ -27,13 +27,16 @@ namespace Opine\Handlebars;
 use Opine\Container\Service as Container;
 use Exception;
 
-class HelperToService {
-    public static function __callStatic ($name, Array $parameters=[]) {
+class HelperToService
+{
+    public static function __callStatic($name, Array $parameters = [])
+    {
         $container = Container::instance();
-        $service = $container->get('helper' . $name);
+        $service = $container->get('helper'.$name);
         if (!is_object($service)) {
-            throw new Exception('Helper service not in container: helper' . $name);
+            throw new Exception('Helper service not in container: helper'.$name);
         }
+
         return call_user_func_array([$service, 'render'], $parameters);
     }
 }

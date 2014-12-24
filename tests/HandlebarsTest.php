@@ -5,29 +5,34 @@ use PHPUnit_Framework_TestCase;
 use Opine\Config\Service as Config;
 use Opine\Container\Service as Container;
 
-class HandlebarsTest extends PHPUnit_Framework_TestCase {
+class HandlebarsTest extends PHPUnit_Framework_TestCase
+{
     private $handlebars;
     private $layout;
 
-    public function setup () {
-        $root = __DIR__ . '/../public';
+    public function setup()
+    {
+        $root = __DIR__.'/../public';
         $config = new Config($root);
         $config->cacheSet();
-        $container = Container::instance($root, $config, $root . '/../config/containers/test-container.yml');
+        $container = Container::instance($root, $config, $root.'/../config/containers/test-container.yml');
         $this->handlebars = $container->get('handlebarService');
         $this->handlebars->quiet();
         $this->layout = $container->get('layout');
     }
 
-    private function normalizeResponse ($input) {
+    private function normalizeResponse($input)
+    {
         return str_replace(['    ', "\n"], '', $input);
     }
 
-    public function testSample () {
+    public function testSample()
+    {
         $this->assertTrue($this->handlebars->build());
     }
 
-    public function testCachedApp () {
+    public function testCachedApp()
+    {
         $context = ['test' => ['test' => 'ABC']];
         ob_start();
         $this->layout->

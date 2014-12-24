@@ -30,7 +30,8 @@ use RegexIterator;
 use Exception;
 use LightnCandy;
 
-class Service {
+class Service
+{
     private $root;
     private $engine;
     private $quiet = false;
@@ -38,32 +39,36 @@ class Service {
     private $hbhelpers = [];
     private $blockhelpers = [];
 
-    public function __construct ($root, $engine) {
+    public function __construct($root, $engine)
+    {
         $this->root = $root;
         $this->engine = $engine;
         $this->helpersLoad();
     }
 
-    public function helpersLoad () {
-        $helpersFile = $this->root . '/../var/cache/helpers.php';
+    public function helpersLoad()
+    {
+        $helpersFile = $this->root.'/../var/cache/helpers.php';
         if (file_exists($helpersFile)) {
             $this->helpers = require $helpersFile;
         }
-        $helpersFile = $this->root . '/../var/cache/hbhelpers.php';
+        $helpersFile = $this->root.'/../var/cache/hbhelpers.php';
         if (file_exists($helpersFile)) {
             $this->hbhelpers = require $helpersFile;
         }
-        $helpersFile = $this->root . '/../var/cache/blockhelpers.php';
+        $helpersFile = $this->root.'/../var/cache/blockhelpers.php';
         if (file_exists($helpersFile)) {
             $this->blockhelpers = require $helpersFile;
         }
     }
 
-    public function quiet () {
+    public function quiet()
+    {
         $this->quiet = true;
     }
 
-    private function compileFile ($input) {
+    private function compileFile($input)
+    {
         $output = str_replace('/public/../public/', '/var/cache/public/', $input);
         try {
             $php = $this->engine->compile(
@@ -83,30 +88,35 @@ class Service {
             if (filesize($output) == 0) {
                 echo 'Bad Compile: ', $output, "\n";
             }
+
             return true;
         } catch (Exception $e) {
             echo $input, ': ', $e->getMessage(), "\n";
+
             return $e->getMessage();
         }
     }
 
-    private function rsearch($folder, $extension) {
+    private function rsearch($folder, $extension)
+    {
         $dir = new RecursiveDirectoryIterator($folder);
         $ite = new RecursiveIteratorIterator($dir);
-        $files = new RegexIterator($ite, '/' . $extension . '$/');
+        $files = new RegexIterator($ite, '/'.$extension.'$/');
         $files->setMode(RegexIterator::MATCH);
         $fileList = [];
         foreach ($files as $file) {
             $fileList[] = $file->getPathname();
         }
+
         return $fileList;
     }
 
-    public function build () {
-        foreach ($this->rsearch($this->root . '/../public/layouts', 'html') as $file) {
+    public function build()
+    {
+        foreach ($this->rsearch($this->root.'/../public/layouts', 'html') as $file) {
             $this->compileFile($file);
         }
-        foreach ($this->rsearch($this->root . '/../public/partials', 'hbs') as $file) {
+        foreach ($this->rsearch($this->root.'/../public/partials', 'hbs') as $file) {
             $this->compileFile($file);
         }
     }
