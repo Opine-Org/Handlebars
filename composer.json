@@ -17,7 +17,7 @@
         "php": ">=5.4.0",
         "phpunit/phpunit": "3.7.32",
         "opine/db": "dev-master",
-        "opine/container": "dev-master",
+        "opine/container": "2.0.2",
         "opine/lightncandy": "dev-master",
         "opine/bundle": "1.9.0",
         "opine/layout": "dev-master",
