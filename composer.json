@@ -19,8 +19,8 @@
         "opine/container": "2.0.4",
         "opine/lightncandy": "1.0.0",
         "opine/bundle": "2.0.1",
-        "opine/layout": "2.0.0",
-        "opine/helper": "2.0.0"
+        "opine/layout": "2.0.1",
+        "opine/helper": "2.0.1"
     },
     "autoload": {
         "psr-4": {"Opine\\Handlebars\\": "src/"}
