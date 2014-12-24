@@ -1,7 +1,6 @@
 {
     "name": "opine/handlebars",
     "type": "library",
-    "minimum-stability": "dev",
     "description": "Wrapper to Zordius LightnCandy Handlebars PHP compiler for compiling all layouts and partials in opine projects",
     "keywords": ["handlebars"],
     "license": "MIT",
@@ -16,15 +15,15 @@
     "require": {
         "php": ">=5.4.0",
         "phpunit/phpunit": "3.7.32",
-        "opine/db": "2.0.0",
-        "opine/container": "2.0.3",
-        "opine/lightncandy": "dev-master",
-        "opine/bundle": "2.0.0",
+        "opine/db": "2.0.1",
+        "opine/container": "2.0.4",
+        "opine/lightncandy": "1.0.0",
+        "opine/bundle": "2.0.1",
         "opine/layout": "2.0.0",
         "opine/helper": "2.0.0"
     },
     "autoload": {
         "psr-4": {"Opine\\Handlebars\\": "src/"}
     },
-    "version": "2.0.0"
+    "version": "2.0.1"
 }
